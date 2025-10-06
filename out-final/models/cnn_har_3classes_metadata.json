@@ -1,0 +1,101 @@
+{
+  "model_info": {
+    "type": "CNN",
+    "architecture": "Conv1D + Dense",
+    "input_shape": [
+      100,
+      4
+    ],
+    "output_classes": 3,
+    "total_parameters": 292675,
+    "sensor_focus": "accelerometer_only",
+    "class_modification": "stairs_removed_completely"
+  },
+  "training_info": {
+    "window_size": 100,
+    "step_size": 50,
+    "sampling_rate": 50,
+    "batch_size": 32,
+    "epochs_trained": 30,
+    "learning_rate": 0.001
+  },
+  "performance": {
+    "final_train_accuracy": 0.9954876899719238,
+    "final_val_accuracy": 0.9939939975738525,
+    "best_val_accuracy": 0.9954954981803894,
+    "test_accuracy": 0.9932356257046223,
+    "final_train_loss": 0.01584477536380291,
+    "final_val_loss": 0.04543738067150116
+  },
+  "classes": {
+    "names": [
+      "IDLE",
+      "RUN",
+      "WALK"
+    ],
+    "encoding": {
+      "IDLE": 0,
+      "RUN": 1,
+      "WALK": 2
+    },
+    "original_classes": [
+      "DOWNSTAIRS",
+      "IDLE",
+      "RUN",
+      "UPSTAIRS",
+      "WALK"
+    ],
+    "removed_classes": [
+      "DOWNSTAIRS",
+      "UPSTAIRS"
+    ],
+    "final_classes": {
+      "IDLE": [
+        "IDLE"
+      ],
+      "RUN": [
+        "RUN"
+      ],
+      "WALK": [
+        "WALK"
+      ]
+    },
+    "num_classes": 3
+  },
+  "preprocessing": {
+    "scaler_mean": [
+      -0.18200116482123732,
+      6.141968012738515,
+      -3.1081432506977946,
+      11.779727640266291
+    ],
+    "scaler_scale": [
+      5.189256966259507,
+      8.711534803600445,
+      5.96693030459829,
+      6.861410236798096
+    ],
+    "scaler_var": [
+      26.928387861872828,
+      75.89083863434183,
+      35.60425725993345,
+      47.07895043763771
+    ],
+    "feature_names": [
+      "ax_mps2",
+      "ay_mps2",
+      "az_mps2",
+      "acc_magnitude",
+      "acc_density",
+      "ax_kurtosis",
+      "ay_kurtosis",
+      "az_kurtosis"
+    ]
+  },
+  "mobile_deployment": {
+    "optimized_for": "accelerometer_only_devices",
+    "tflite_compatible": true,
+    "onnx_compatible": true,
+    "realtime_capable": true
+  }
+}

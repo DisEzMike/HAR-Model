@@ -1,0 +1,22 @@
+{
+  "version": "3_classes_4_features",
+  "input_shape": [
+    100,
+    4
+  ],
+  "window_size": 100,
+  "sampling_rate": 50,
+  "features": [
+    "ax",
+    "ay",
+    "az",
+    "acc_magnitude"
+  ],
+  "classes": [
+    "IDLE",
+    "RUN",
+    "WALK"
+  ],
+  "normalization": "use_saved_scaler",
+  "scaler_file": "scaler_3classes.pkl"
+}
