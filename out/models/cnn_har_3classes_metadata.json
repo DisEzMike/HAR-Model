@@ -9,27 +9,23 @@
     "output_classes": 3,
     "total_parameters": 292675,
     "sensor_focus": "accelerometer_only",
-    "version": "3_classes_4_features",
-    "description": "HAR CNN model with 3 activity classes using only accelerometer data"
+    "class_modification": "stairs_removed_completely"
   },
   "training_info": {
     "window_size": 100,
     "step_size": 50,
     "sampling_rate": 50,
     "batch_size": 32,
-    "epochs_trained": 39,
-    "learning_rate": 0.001,
-    "window_duration_seconds": 2.0,
-    "overlap_percentage": 50.0
+    "epochs_trained": 30,
+    "learning_rate": 0.001
   },
   "performance": {
-    "final_train_accuracy": 0.9961819052696228,
-    "final_val_accuracy": 0.9954954981803894,
-    "best_val_accuracy": 0.9969969987869263,
-    "test_accuracy": 0.9943630214205186,
-    "final_train_loss": 0.012333973310887814,
-    "final_val_loss": 0.027838338166475296,
-    "best_val_loss": 0.022333335131406784
+    "final_train_accuracy": 0.9954876899719238,
+    "final_val_accuracy": 0.9939939975738525,
+    "best_val_accuracy": 0.9954954981803894,
+    "test_accuracy": 0.9932356257046223,
+    "final_train_loss": 0.01584477536380291,
+    "final_val_loss": 0.04543738067150116
   },
   "classes": {
     "names": [
@@ -42,17 +38,29 @@
       "RUN": 1,
       "WALK": 2
     },
-    "num_classes": 3,
-    "removed_classes": [
-      "STAIRS",
+    "original_classes": [
+      "DOWNSTAIRS",
+      "IDLE",
+      "RUN",
       "UPSTAIRS",
-      "DOWNSTAIRS"
+      "WALK"
     ],
-    "description": {
-      "IDLE": "Standing still or sitting without movement",
-      "RUN": "Running activity with high acceleration variance",
-      "WALK": "Walking activity with moderate periodic movement"
-    }
+    "removed_classes": [
+      "DOWNSTAIRS",
+      "UPSTAIRS"
+    ],
+    "final_classes": {
+      "IDLE": [
+        "IDLE"
+      ],
+      "RUN": [
+        "RUN"
+      ],
+      "WALK": [
+        "WALK"
+      ]
+    },
+    "num_classes": 3
   },
   "preprocessing": {
     "scaler_mean": [
@@ -77,151 +85,17 @@
       "ax_mps2",
       "ay_mps2",
       "az_mps2",
-      "acc_magnitude"
-    ],
-    "feature_descriptions": {
-      "ax_mps2": "Accelerometer X-axis (m/s²)",
-      "ay_mps2": "Accelerometer Y-axis (m/s²)",
-      "az_mps2": "Accelerometer Z-axis (m/s²)",
-      "acc_magnitude": "Accelerometer magnitude sqrt(ax² + ay² + az²)"
-    },
-    "feature_engineering": {
-      "raw_sensors": 3,
-      "magnitude_features": 1,
-      "total_features": 4,
-      "removed_features": [
-        "gyroscope",
-        "kurtosis",
-        "density"
-      ],
-      "magnitude_calculation": "sqrt(ax² + ay² + az²)"
-    },
-    "sensor_requirements": {
-      "required": [
-        "accelerometer"
-      ],
-      "sampling_rate": 50,
-      "axes": [
-        "x",
-        "y",
-        "z"
-      ],
-      "units": "m/s²"
-    }
-  },
-  "model_architecture": {
-    "layers": [
-      {
-        "type": "Conv1D",
-        "filters": 64,
-        "kernel_size": 3,
-        "activation": "relu"
-      },
-      {
-        "type": "BatchNormalization"
-      },
-      {
-        "type": "MaxPooling1D",
-        "pool_size": 2
-      },
-      {
-        "type": "Dropout",
-        "rate": 0.2
-      },
-      {
-        "type": "Conv1D",
-        "filters": 128,
-        "kernel_size": 3,
-        "activation": "relu"
-      },
-      {
-        "type": "BatchNormalization"
-      },
-      {
-        "type": "MaxPooling1D",
-        "pool_size": 2
-      },
-      {
-        "type": "Dropout",
-        "rate": 0.2
-      },
-      {
-        "type": "Conv1D",
-        "filters": 256,
-        "kernel_size": 3,
-        "activation": "relu"
-      },
-      {
-        "type": "BatchNormalization"
-      },
-      {
-        "type": "MaxPooling1D",
-        "pool_size": 2
-      },
-      {
-        "type": "Dropout",
-        "rate": 0.3
-      },
-      {
-        "type": "Conv1D",
-        "filters": 128,
-        "kernel_size": 3,
-        "activation": "relu"
-      },
-      {
-        "type": "BatchNormalization"
-      },
-      {
-        "type": "Dropout",
-        "rate": 0.3
-      },
-      {
-        "type": "GlobalAveragePooling1D"
-      },
-      {
-        "type": "Dense",
-        "units": 256,
-        "activation": "relu"
-      },
-      {
-        "type": "BatchNormalization"
-      },
-      {
-        "type": "Dropout",
-        "rate": 0.4
-      },
-      {
-        "type": "Dense",
-        "units": 128,
-        "activation": "relu"
-      },
-      {
-        "type": "BatchNormalization"
-      },
-      {
-        "type": "Dropout",
-        "rate": 0.4
-      },
-      {
-        "type": "Dense",
-        "units": 3,
-        "activation": "softmax"
-      }
-    ],
-    "optimizer": "Adam",
-    "loss": "categorical_crossentropy",
-    "metrics": [
-      "accuracy"
+      "acc_magnitude",
+      "acc_density",
+      "ax_kurtosis",
+      "ay_kurtosis",
+      "az_kurtosis"
     ]
   },
-  "deployment": {
-    "model_size_mb": 3.45,
-    "inference_time_target": "<10ms",
-    "memory_usage_target": "<5MB",
-    "supported_platforms": [
-      "mobile",
-      "edge"
-    ],
-    "optimization_level": "production_ready"
+  "mobile_deployment": {
+    "optimized_for": "accelerometer_only_devices",
+    "tflite_compatible": true,
+    "onnx_compatible": true,
+    "realtime_capable": true
   }
 }

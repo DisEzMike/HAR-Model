@@ -116,10 +116,12 @@
   "deployment": {
     "platforms": [
       "android",
-      "ios"
+      "ios",
+      "web"
     ],
     "model_formats": [
-      "tflite"
+      "tflite",
+      "onnx"
     ],
     "optimization": "float16",
     "target_size_mb": "<5MB",
